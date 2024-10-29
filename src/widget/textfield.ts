@@ -9,7 +9,11 @@ export type SKTextfieldProps = SKElementProps & {
 };
 
 export class SKTextfield extends SKElement {
-  constructor({ text = "", fill = "white", ...elementProps }: SKTextfieldProps = {}) {
+  constructor({
+    text = "",
+    fill = "white",
+    ...elementProps
+  }: SKTextfieldProps = {}) {
     super(elementProps);
     this.padding = Style.textPadding;
     this.text = text;
@@ -53,8 +57,16 @@ export class SKTextfield extends SKElement {
     return this._fontColour;
   }
 
+  protected _borderClickedColor = "mediumblue";
+  set borderClickedColor(c: string) {
+    this._borderClickedColor = c;
+  }
+  get borderClickedColor() {
+    return this._borderClickedColor;
+  }
+
   protected _highlightColour = Style.highlightColour;
-  set highlightColour(hc: string){
+  set highlightColour(hc: string) {
     this._highlightColour = hc;
   }
 
@@ -63,9 +75,7 @@ export class SKTextfield extends SKElement {
     const m = measureText(this.text || " ", this.font);
 
     if (!m) {
-      console.warn(
-        `measureText failed in SKTextfield for ${this.text}`
-      );
+      console.warn(`measureText failed in SKTextfield for ${this.text}`);
       return;
     }
 
@@ -158,7 +168,7 @@ export class SKTextfield extends SKElement {
     gc.fillStyle = this.fill;
     gc.fill();
     gc.lineWidth = 1;
-    gc.strokeStyle = this.focus ? "mediumblue" : "black";
+    gc.strokeStyle = this.focus ? this._borderClickedColor : this.border;
     gc.stroke();
     // clip text if it's wider than text area
     // TODO: could scroll text if it's wider than text area
